@@ -10,7 +10,6 @@ export default function AboutPage() {
     <>
       <Header />
       <main>
-        
         <AboutUs isPage />
         <ContactForm />
       </main>

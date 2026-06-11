@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ShieldCheck, Award, Factory, Headphones } from 'lucide-react'
+import { ShieldCheck, Award, Factory, Headphones, Microscope, Drill, Users, Blocks } from 'lucide-react'
 
 const STATS = [
   { value: '60', label: 'Years of expertise' },
@@ -16,21 +16,65 @@ const PILLARS = [
     icon: ShieldCheck,
     title: 'Built for Every Load',
     body: 'From compact 60A switches to our flagship 200A model — Ceko\'s range covers every industrial and commercial application. We also manufacture precision Ampere and Volt meters for panel boards.',
+    hover: 'hover:bg-amber-50 hover:border-amber-200',
+    iconBg: 'bg-amber-100 group-hover:bg-amber-200',
+    iconColor: 'text-amber-600',
   },
   {
     icon: Factory,
     title: 'In-House Manufacturing',
     body: 'Vertically integrated production in our facility means tighter tolerances, faster lead times, and full traceability.',
+    hover: 'hover:bg-sky-50 hover:border-sky-200',
+    iconBg: 'bg-sky-100 group-hover:bg-sky-200',
+    iconColor: 'text-sky-600',
   },
   {
     icon: Award,
     title: '60 Years of Industrial Excellence',
     body: 'Founded in New Delhi in 1964, Ceko Products Corporation has been a cornerstone of India\'s electrical manufacturing industry. Our engineering heritage and commitment to quality set us apart.',
+    hover: 'hover:bg-purple-50 hover:border-purple-200',
+    iconBg: 'bg-purple-100 group-hover:bg-purple-200',
+    iconColor: 'text-purple-600',
   },
   {
     icon: Headphones,
     title: 'Engineering Support',
     body: 'Dedicated application engineers available for custom specifications, CAD drawings, and on-site commissioning support worldwide.',
+    hover: 'hover:bg-green-50 hover:border-green-200',
+    iconBg: 'bg-green-100 group-hover:bg-green-200',
+    iconColor: 'text-green-600',
+  },
+  {
+    icon: Microscope,
+    title: 'Uncompromising Quality',
+    body: 'Every switch undergoes rigorous testing — thermal cycling, load endurance, and IP rating verification — before it leaves our facility.',
+    hover: 'hover:bg-rose-50 hover:border-rose-200',
+    iconBg: 'bg-rose-100 group-hover:bg-rose-200',
+    iconColor: 'text-rose-600',
+  },
+  {
+    icon: Drill,
+    title: 'Made in India',
+    body: 'Proudly designed and manufactured in New Delhi. We source precision components locally and support India\'s manufacturing ecosystem.',
+    hover: 'hover:bg-orange-50 hover:border-orange-200',
+    iconBg: 'bg-orange-100 group-hover:bg-orange-200',
+    iconColor: 'text-orange-600',
+  },
+  {
+    icon: Users,
+    title: 'Long-term Relationships',
+    body: 'We don\'t just sell switches. We build lasting partnerships with panel builders, OEMs, and electrical contractors across India.',
+    hover: 'hover:bg-teal-50 hover:border-teal-200',
+    iconBg: 'bg-teal-100 group-hover:bg-teal-200',
+    iconColor: 'text-teal-600',
+  },
+  {
+    icon: Blocks,
+    title: 'Engineering-first Culture',
+    body: 'Our team of experienced engineers continuously refines our designs to meet the evolving demands of India\'s industrial sector.',
+    hover: 'hover:bg-indigo-50 hover:border-indigo-200',
+    iconBg: 'bg-indigo-100 group-hover:bg-indigo-200',
+    iconColor: 'text-indigo-600',
   },
 ]
 
@@ -138,9 +182,9 @@ export default function AboutUs({ isPage = false }: { isPage?: boolean }) {
           </motion.div>
         </div>
 
-        {/* ── Four pillars grid ── */}
+        {/* ── Pillars grid — 4 on homepage, all on about page ── */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {PILLARS.map((p, i) => {
+          {(isPage ? PILLARS : PILLARS.slice(0, 4)).map((p, i) => {
             const Icon = p.icon
             return (
               <motion.div
@@ -149,10 +193,10 @@ export default function AboutUs({ isPage = false }: { isPage?: boolean }) {
                 variants={fadeUp}
                 initial="hidden"
                 animate={isInView ? 'visible' : 'hidden'}
-                className="group p-6 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-amber-50 hover:border-amber-200 transition-colors duration-300"
+                className={`group p-6 rounded-2xl border border-gray-100 bg-gray-50 transition-colors duration-300 ${p.hover}`}
               >
-                <span className="flex items-center justify-center w-11 h-11 rounded-xl bg-amber-100 group-hover:bg-amber-200 mb-5 transition-colors">
-                  <Icon className="w-5 h-5 text-amber-600" strokeWidth={1.75} />
+                <span className={`flex items-center justify-center w-11 h-11 rounded-xl mb-5 transition-colors ${p.iconBg}`}>
+                  <Icon className={`w-5 h-5 ${p.iconColor}`} strokeWidth={1.75} />
                 </span>
                 <h3 className="font-bold text-gray-950 mb-2">{p.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{p.body}</p>

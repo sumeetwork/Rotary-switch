@@ -3,15 +3,16 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import * as Label from '@radix-ui/react-label'
-import { Send, CheckCircle2, MapPin, Phone, Mail } from 'lucide-react'
+import { Send, CheckCircle2, MapPin, Phone, Mail, Clock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const PRODUCTS = ['100A Rotary Switch', '150A Rotary Switch', '200A Rotary Switch', 'Custom / Other']
 
 const INFO = [
-  { icon: MapPin, label: 'Address',   value: '14 Industrial Park, Sheffield, S1 2AB, UK' },
-  { icon: Phone,  label: 'Phone',     value: '+44 (0) 114 555 0100' },
-  { icon: Mail,   label: 'Email',     value: 'sales@rotarypro.co.uk' },
+  { icon: MapPin, label: 'Address',   value: '29/13, Gali No.-6, Anand Parbat, Industrial Area, New Delhi – 110005, India' },
+  { icon: Phone,  label: 'Phone',     value: '+91 9810923294 / +91 9891332002' },
+  { icon: Mail,   label: 'Email',     value: 'info@cekoproducts.in' },
+  { icon: Clock,   label: 'Hours',     value: 'Tue-Sun: 9AM - 5PM (IST)' },
 ]
 
 const fadeUp = {
@@ -22,7 +23,7 @@ const fadeUp = {
   }),
 }
 
-export default function ContactForm() {
+export default function ContactForm({ isPage = false }: { isPage?: boolean }) {
   const ref = useRef<HTMLElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-8% 0px' })
 
@@ -54,6 +55,13 @@ export default function ContactForm() {
 
   return (
     <section id="contact" ref={ref} className="bg-white py-28 md:py-36 relative overflow-hidden">
+
+      {isPage && (
+              <div className="container mx-auto px-4 py-8 aboutus-content">
+                
+              </div>
+              )}
+
       {/* Top amber stripe */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500" />
 
@@ -218,8 +226,8 @@ export default function ContactForm() {
             <div className="mt-2 grid grid-cols-2 gap-4">
               {[
                 { val: '< 1 day',  sub: 'Response time' },
-                { val: '3–5 days', sub: 'Standard lead time' },
-                { val: '5 year',   sub: 'Product warranty' },
+                { val: '7 days',   sub: 'Standard lead time' },
+                { val: '1 year',   sub: 'Product warranty' },
                 { val: 'Free',     sub: 'Technical consultation' },
               ].map((b) => (
                 <div key={b.sub} className="p-4 rounded-2xl bg-gray-50 border border-gray-100">
