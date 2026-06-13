@@ -1,5 +1,14 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Zap, Twitter, Linkedin, Youtube } from 'lucide-react'
+import {
+  motion,
+  useMotionValue, useSpring, useTransform,
+  useAnimationControls, AnimatePresence,
+} from 'framer-motion'
 
 const LINKS = {
   Products: [
@@ -25,21 +34,129 @@ const SOCIALS = [
 
 const CERTS = ['CE', 'UL', 'RoHS', 'ISO 9001']
 
+/* ─── Animated Logo ─────────────────────────────────────────── */
+function AnimatedLogo() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const spinControls = useAnimationControls()
+  const [hovered, setHovered]   = useState(false)
+  const [spinning, setSpinning] = useState(false)
+
+  /* Magnetic cursor pull */
+  const mx = useMotionValue(0)
+  const my = useMotionValue(0)
+  const tx = useSpring(mx, { stiffness: 180, damping: 18 })
+  const ty = useSpring(my, { stiffness: 180, damping: 18 })
+
+  /* 3-D tilt derived from cursor position */
+  const rotateX = useTransform(ty, [-25, 25], [14, -14])
+  const rotateY = useTransform(tx, [-25, 25], [-14, 14])
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    mx.set(e.clientX - rect.left - rect.width  / 2)
+    my.set(e.clientY - rect.top  - rect.height / 2)
+  }
+  const onMouseEnter = () => setHovered(true)
+  const onMouseLeave = () => { mx.set(0); my.set(0); setHovered(false) }
+
+  /* Click → 360° spin + bounce (controls only drive spin, not entrance) */
+  const handleClick = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (spinning) return
+    setSpinning(true)
+    await spinControls.start({
+      rotate: 360,
+      scale:  [1, 1.2, 1],
+      transition: { duration: 0.65, ease: 'easeInOut' },
+    })
+    await spinControls.start({ rotate: 0, transition: { duration: 0 } })
+    setSpinning(false)
+  }
+
+  return (
+    /* Outermost: handles magnetic pull */
+    <motion.div
+      ref={containerRef}
+      style={{ x: tx, y: ty }}
+      onMouseMove={onMouseMove}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={handleClick}
+      className="relative cursor-pointer select-none"
+    >
+      {/* Spinning conic glow ring — hover only */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.span
+            key="ring"
+            className="absolute -inset-3 rounded-full pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, rotate: 360 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              rotate:  { duration: 1.8, repeat: Infinity, ease: 'linear', from: 0 },
+              opacity: { duration: 0.25 },
+            }}
+            style={{
+              background: 'conic-gradient(from 0deg, transparent 55%, #f59e0b 75%, #fef08a 88%, transparent 100%)',
+              borderRadius: '50%',
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Idle pulse ring */}
+      <motion.span
+        className="absolute inset-0 rounded-full bg-amber-400/15 pointer-events-none"
+        animate={{ scale: [1, 1.55, 1], opacity: [0.5, 0, 0.5] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* Entrance wrapper — pure variants, no controls */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.35, rotate: -25 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ type: 'spring', stiffness: 220, damping: 18, delay: 0.2 }}
+        className="relative z-10"
+      >
+        {/* 3-D tilt + click-spin layer */}
+        <motion.div
+          animate={spinControls}
+          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        >
+          {/* Amber glow intensifying on hover */}
+          <motion.div
+            className="absolute inset-0 rounded-full bg-amber-400/30 blur-2xl pointer-events-none"
+            animate={{ opacity: hovered ? 1 : 0.25, scale: hovered ? 1.6 : 1 }}
+            transition={{ duration: 0.3 }}
+          />
+
+          <Image
+            src="/images/ceko-logo-new.png"
+            alt="Ceko logo"
+            width={60}
+            height={60}
+            className="relative object-contain drop-shadow-[0_2px_14px_rgba(245,158,11,0.55)]"
+            priority
+          />
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 export default function Footer() {
   return (
     <footer className="bg-gray-950 border-t border-white/8">
       {/* Main grid */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid sm:grid-cols-2 lg:grid-cols-5 gap-12">
         {/* Brand column */}
-        <div className="lg:col-span-2 flex flex-col gap-5">
-          <Link href="#" className="flex items-center gap-2 w-fit">
-            <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-amber-500">
-              <Zap className="w-5 h-5 text-gray-950" strokeWidth={2.5} />
-            </span>
-            <span className="text-white font-bold text-xl tracking-tight">
-              Rotary<span className="text-amber-400">Pro</span>
-            </span>
-          </Link>
+        <div className="lg:col-span-2 flex flex-col gap-5 footer-logo">
+          {/* Logo */}
+        <Link href="/">
+          <AnimatedLogo />
+        </Link>
 
           <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
             Precision-engineered rotary switches for industrial, marine, and energy applications.
