@@ -9,7 +9,9 @@ import { cn } from '@/lib/utils'
 const PRODUCTS = ['100A Rotary Switch', '150A Rotary Switch', '200A Rotary Switch', 'Custom / Other']
 
 const INFO = [
-  { icon: MapPin, label: 'Address',   value: '29/13, Gali No.-6, Anand Parbat, Industrial Area, New Delhi – 110005, India' },
+  { icon: MapPin, 
+    label: 'Address',   
+    value: '29/13, Gali No.6, Anand Parbat, Industrial Area, New Delhi – 110005, India' },
   { icon: Phone,  label: 'Phone',     value: '+91 9810923294 / +91 9891332002' },
   { icon: Mail,   label: 'Email',     value: 'info@cekoproducts.in' },
   { icon: Clock,   label: 'Hours',     value: 'Tue-Sun: 9AM - 5PM (IST)' },

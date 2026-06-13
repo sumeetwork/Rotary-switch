@@ -56,3 +56,11 @@ body {
   position: absolute;
   top: 0;
 }
+
+.terms-policy h1, .terms-policy h2, .terms-policy h3, .terms-policy h4, .postcontent-wrapper h1, .postcontent-wrapper h2, .postcontent-wrapper h3, .postcontent-wrapper h4 {
+    font-family: "Inter", Sans-serif;
+    font-size: 30px;
+    line-height: 33px;
+    font-weight: 600;
+    padding: 30px 0;
+}

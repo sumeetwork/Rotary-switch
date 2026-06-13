@@ -3,22 +3,17 @@ import { Zap, Twitter, Linkedin, Youtube } from 'lucide-react'
 
 const LINKS = {
   Products: [
-    { label: '100A Rotary Switch', href: '#products' },
-    { label: '150A Rotary Switch', href: '#products' },
-    { label: '200A Rotary Switch', href: '#products' },
-    { label: 'Custom Switches',    href: '#contact' },
+    { label: '100A Rotary Switch', href: '/products' },
+    { label: '150A Rotary Switch', href: '/products' },
+    { label: '200A Rotary Switch', href: '/products' },
+    { label: 'Custom Switches',    href: '/contact' },
   ],
   Company: [
-    { label: 'About Us',     href: '#about' },
-    { label: 'Certifications', href: '#about' },
-    { label: 'Careers',      href: '#' },
-    { label: 'News',         href: '#' },
+    { label: 'About Us',     href: '/about' },
+    { label: 'Quality Assurance', href: '/about' },
   ],
   Support: [
-    { label: 'Contact Sales',       href: '#contact' },
-    { label: 'Technical Docs',      href: '#' },
-    { label: 'Warranty & Returns',  href: '#' },
-    { label: 'Distribution',        href: '#' },
+    { label: 'Contact Sales',       href: '/contact' },
   ],
 }
 
@@ -48,7 +43,7 @@ export default function Footer() {
 
           <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
             Precision-engineered rotary switches for industrial, marine, and energy applications.
-            Trusted by engineers worldwide since 1999.
+            Trusted by engineers worldwide since 1964.
           </p>
 
           {/* Cert badges */}
@@ -96,11 +91,10 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/8">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-600">
-          <p>© {new Date().getFullYear()} RotaryPro Ltd. All rights reserved. Registered in England &amp; Wales No. 03841920.</p>
+          <p>© {new Date().getFullYear()} Ceko Products Corporation. All rights reserved. Registered in India.</p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-amber-400 transition-colors">Terms of Sale</Link>
-            <Link href="#" className="hover:text-amber-400 transition-colors">Sitemap</Link>
+            <Link href="/policy" className="hover:text-amber-400 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-amber-400 transition-colors">Terms of Sale</Link>
           </div>
         </div>
       </div>
